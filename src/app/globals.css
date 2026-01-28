@@ -21,7 +21,15 @@
   }
 }
 
-
+@theme {
+  --color-light-blue: #B9DDFF;
+  --color-purple: #6369D1;
+  --color-light-yellow: #F5F2B8;
+  --color-light-green: #C5DCA0;
+  --color-orange: #F7A278;
+  --color-pink: #A13D63;
+  --color-aubergine: #351E29;
+}
 
 html,
 body {
@@ -29,6 +37,6 @@ body {
 }
 
 body {
-  background: var(--background);
+  background: #f1f1ec;
   color: var(--foreground);
 }

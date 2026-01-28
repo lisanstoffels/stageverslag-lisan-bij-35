@@ -23,8 +23,8 @@ export function useDraggable() {
           const centerX = (containerRect.width - elementRect.width) / 2;
           const centerY = (containerRect.height - elementRect.height) / 2;
           
-          setPosition({ x: centerX, y: centerY });
-        }, 0);
+          setPosition({ x: centerX, y: centerY * 4 });
+        }, 10);
         
         return () => clearTimeout(timer);
       }
@@ -83,7 +83,7 @@ export function useDraggable() {
     style: {
       position: "absolute" as const,
       left: position ? `${position.x}px` : "50%",
-      top: position ? `${position.y}px` : "50%",
+      top: position ? `${position.y}px` : "80%",
       transform: position ? "none" : "translate(-50%, -50%)",
       cursor: isDragging ? "grabbing" : "grab",
     },
