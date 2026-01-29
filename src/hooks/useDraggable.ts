@@ -2,9 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 
-export function useDraggable() {
+export type UseDraggableOptions = {
+  centerYMultiplier?: number;
+};
+
+export function useDraggable(options?: UseDraggableOptions) {
+  const centerYMultiplier = options?.centerYMultiplier ?? 4;
   const elementRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(
+    null,
+  );
   const [isDragging, setIsDragging] = useState(false);
   const dragStart = useRef({ x: 0, y: 0 });
 
@@ -13,23 +20,23 @@ export function useDraggable() {
     if (position === null && elementRef.current) {
       const element = elementRef.current;
       const container = element.parentElement;
-      
+
       if (container) {
         // Use a small delay to ensure layout is complete
         const timer = setTimeout(() => {
           const containerRect = container.getBoundingClientRect();
           const elementRect = element.getBoundingClientRect();
-          
+
           const centerX = (containerRect.width - elementRect.width) / 2;
           const centerY = (containerRect.height - elementRect.height) / 2;
-          
-          setPosition({ x: centerX, y: centerY * 4 });
+
+          setPosition({ x: centerX, y: centerY * centerYMultiplier });
         }, 10);
-        
+
         return () => clearTimeout(timer);
       }
     }
-  }, [position]);
+  }, [position, centerYMultiplier]);
 
   useEffect(() => {
     if (!isDragging) return;
@@ -40,7 +47,7 @@ export function useDraggable() {
       if (!container) return;
 
       const containerRect = container.getBoundingClientRect();
-      
+
       setPosition((prev) => {
         if (!prev) return prev;
         return {
