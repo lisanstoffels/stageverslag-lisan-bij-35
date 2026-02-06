@@ -253,74 +253,132 @@ export function PolaroidCarousel() {
         </div>
       </div>
 
-      {selectedPerson && (
-        <button
-          type="button"
-          onClick={() => setSelectedPerson(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm focus:outline-none"
-          aria-label="Sluiten"
-        >
-          <span
-            className="relative block max-h-[90vh] max-w-[95vw]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src="/images/paper/groot_papier.png"
-              alt=""
-              width={1100}
-              height={900}
-              className="block h-auto w-full max-h-[85vh] object-contain pointer-events-none"
-            />
-            <div className="text-black pt-10 text-left absolute w-[70%] pl-10 left-1/2 top-1/2 -translate-1/2">
-              {selectedPerson.beschrijving}
-            </div>
-
-            <Image
-              src={selectedPerson.polaroid.src}
-              alt={selectedPerson.polaroid.alt}
-              width={290}
-              height={245}
-              className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 block object-contain"
-            />
-
-            {selectedPerson.dog && (
-              <span className=" absolute left-full top-10 -translate-y-[30%] block w-[266px] shrink-0">
+      {selectedPerson &&
+        (() => {
+          const currentIndex = PEOPLE.findIndex((p) => p === selectedPerson);
+          const prevIndex =
+            currentIndex <= 0 ? PEOPLE.length - 1 : currentIndex - 1;
+          const nextIndex =
+            currentIndex >= PEOPLE.length - 1 ? 0 : currentIndex + 1;
+          return (
+            <button
+              type="button"
+              onClick={() => setSelectedPerson(null)}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm focus:outline-none"
+              aria-label="Sluiten"
+            >
+              <span
+                className="relative block max-h-[90vh] max-w-[95vw]"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <Image
-                  src="/images/paper/roze_papier_plakband.png"
+                  src="/images/paper/groot_papier.png"
                   alt=""
-                  width={266}
-                  height={266}
-                  className="block w-full h-auto"
+                  width={1100}
+                  height={900}
+                  className="block h-auto w-full max-h-[85vh] object-contain pointer-events-none"
                 />
-                <Image
-                  src={selectedPerson.dog.src}
-                  alt={selectedPerson.dog.alt}
-                  width={120}
-                  height={140}
-                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block w-[120px] object-cover shadow-sm"
-                />
-              </span>
-            )}
+                <div className="text-black pt-10 text-left absolute w-[70%] pl-10 left-1/2 top-1/2 -translate-1/2">
+                  {selectedPerson.beschrijving}
+                </div>
 
-            <div className="absolute left-full top-1/2 -translate-x-[5%] -translate-y-[25%] block h-[199px] w-[199px] object-contain">
-              <Image
-                src="/images/paper/blauw_papier_plakband.png"
-                alt=""
-                width={290}
-                height={245}
-                className="h-full w-full object-contain"
-              />
-              <div className="text-left px-9 pt-6 absolute inset-0 flex flex-col justify-center overflow-hidden p-3 text-[11px] text-black/90">
-                <ul className="list-inside list-disc space-y-0.5">
-                  {selectedPerson.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </span>
-        </button>
-      )}
+                <Image
+                  src={selectedPerson.polaroid.src}
+                  alt={selectedPerson.polaroid.alt}
+                  width={290}
+                  height={245}
+                  className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 block object-contain"
+                />
+
+                {selectedPerson.dog && (
+                  <span className=" absolute left-full top-10 -translate-y-[30%] block w-[266px] shrink-0">
+                    <Image
+                      src="/images/paper/roze_papier_plakband.png"
+                      alt=""
+                      width={266}
+                      height={266}
+                      className="block w-full h-auto"
+                    />
+                    <Image
+                      src={selectedPerson.dog.src}
+                      alt={selectedPerson.dog.alt}
+                      width={120}
+                      height={140}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 block w-[120px] object-cover shadow-sm"
+                    />
+                  </span>
+                )}
+
+                <div className="absolute left-full top-1/2 -translate-x-[5%] -translate-y-[25%] block h-[199px] w-[199px] object-contain">
+                  <Image
+                    src="/images/paper/blauw_papier_plakband.png"
+                    alt=""
+                    width={290}
+                    height={245}
+                    className="h-full w-full object-contain"
+                  />
+                  <div className="text-left px-9 pt-6 absolute inset-0 flex flex-col justify-center overflow-hidden p-3 text-[11px] text-black/90">
+                    <ul className="list-inside list-disc space-y-0.5">
+                      {selectedPerson.bullets.map((bullet) => (
+                        <li key={bullet}>{bullet}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Links/rechts knoppen om van persoon te wisselen */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full flex items-center gap-4 mt-3">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedPerson(PEOPLE[prevIndex]);
+                    }}
+                    className="rounded-full bg-white/90 p-2 shadow-md hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+                    aria-label="Vorige persoon"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedPerson(PEOPLE[nextIndex]);
+                    }}
+                    className="rounded-full bg-white/90 p-2 shadow-md hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+                    aria-label="Volgende persoon"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                    >
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </button>
+                </div>
+              </span>
+            </button>
+          );
+        })()}
     </>
   );
 }
