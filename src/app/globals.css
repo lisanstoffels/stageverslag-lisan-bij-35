@@ -34,9 +34,76 @@
 html,
 body {
   height: 100%;
+  overflow-x: hidden;
 }
 
 body {
   background: #f1f1ec;
   color: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #1f1d1b;
+  }
+
+  nav {
+    background: #1f1d1b;
+
+    li {
+      color: #f1f1ec;
+    }
+  }
+
+}
+
+@media (max-width: 1055px) {
+  body {
+    overflow: hidden;
+  }
+}
+
+/* NavBar notch: iPhone-style met radial-gradient hoeken (links + rechts) */
+.navbar-notch {
+  --notch-color: #f1f1ec;
+  --notch-corner: 28px;
+  position: relative;
+  overflow: visible;
+  background-color: var(--notch-color);
+  border-radius: 0 0 28px 28px;
+}
+
+.navbar-notch::before,
+.navbar-notch::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: calc(var(--notch-corner) * 2);
+  height: var(--notch-corner);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+
+/* Linker bovenhoek van de notch */
+.navbar-notch::before {
+  left: calc(var(--notch-corner) * -1);
+  background-image: radial-gradient(circle at 0 100%,
+      transparent calc(var(--notch-corner) - 1px),
+      var(--notch-color) var(--notch-corner));
+}
+
+/* Rechter bovenhoek van de notch */
+.navbar-notch::after {
+  right: calc(var(--notch-corner) * -1);
+  left: auto;
+  background-image: radial-gradient(circle at 100% 100%,
+      transparent calc(var(--notch-corner) - 1px),
+      var(--notch-color) var(--notch-corner));
+}
+
+@media (prefers-color-scheme: dark) {
+  .navbar-notch {
+    --notch-color: #1f1d1b;
+  }
 }

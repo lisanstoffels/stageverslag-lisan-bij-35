@@ -1,17 +1,29 @@
-"use client"
+"use client";
 import { useState } from "react";
 import { Draggable } from "./Draggable";
 
-export default function NotesWindow() {
-  const [activeItem, setActiveItem] = useState<string | null>("Snelle notities");
+type NotesWindowProps = {
+  /** When true, the red traffic light closes the window (calls onClose) */
+  closable?: boolean;
+  /** Called when the user clicks the close button (only when closable is true) */
+  onClose?: () => void;
+};
+
+export default function NotesWindow({
+  closable = false,
+  onClose,
+}: NotesWindowProps) {
+  const [activeItem, setActiveItem] = useState<string | null>(
+    "Snelle notities"
+  );
   const [clickedBullets, setClickedBullets] = useState<Set<number>>(new Set());
 
   const handleSideBarClick = (label: string) => {
     setActiveItem(label);
-  }
-  
+  };
+
   const handleBulletClick = (index: number) => {
-    setClickedBullets(prev => {
+    setClickedBullets((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(index)) {
         newSet.delete(index);
@@ -20,23 +32,43 @@ export default function NotesWindow() {
       }
       return newSet;
     });
-  }
-  
+  };
+
   return (
     <Draggable className="flex h-[520px] w-[860px] overflow-hidden rounded-3xl bg-white/70 backdrop-blur-2xl shadow-[0_30px_60px_rgba(0,0,0,0.18),0_4px_12px_rgba(0,0,0,0.12)] p-3">
       {/* Sidebar */}
       <aside className="w-[240px] bg-black/5 backdrop-blur-xl p-3 rounded-xl">
         <div className="flex items-center gap-2 mb-4">
-          <TrafficLights />
+          <TrafficLights closable={closable} onClose={onClose} />
         </div>
         <div className="space-y-1 text-[13px] text-black/80">
-          <SidebarItem label="Snelle notities" count={1} active={activeItem === "Snelle notities"} onClick={() => handleSideBarClick("Snelle notities")} />
-          <SidebarItem label="Gedeeld" count={0} active={activeItem === "Gedeeld"} onClick={() => handleSideBarClick("Gedeeld")} />
+          <SidebarItem
+            label="Snelle notities"
+            count={1}
+            active={activeItem === "Snelle notities"}
+            onClick={() => handleSideBarClick("Snelle notities")}
+          />
+          <SidebarItem
+            label="Gedeeld"
+            count={0}
+            active={activeItem === "Gedeeld"}
+            onClick={() => handleSideBarClick("Gedeeld")}
+          />
         </div>
 
         <div className="mt-4 space-y-1 text-[13px] text-black/80">
-          <SidebarItem label="Alle" count={0} active={activeItem === "Alle"} onClick={() => handleSideBarClick("Alle")} />
-          <SidebarItem label="Recent verwijderd" count={1} active={activeItem === "Recent verwijderd"} onClick={() => handleSideBarClick("Recent verwijderd")} />
+          <SidebarItem
+            label="Alle"
+            count={0}
+            active={activeItem === "Alle"}
+            onClick={() => handleSideBarClick("Alle")}
+          />
+          <SidebarItem
+            label="Recent verwijderd"
+            count={1}
+            active={activeItem === "Recent verwijderd"}
+            onClick={() => handleSideBarClick("Recent verwijderd")}
+          />
         </div>
       </aside>
 
@@ -127,9 +159,7 @@ export default function NotesWindow() {
                 </svg>
               </ToolbarButton>
               {/* ellipses */}
-              <ToolbarButton
-
-              >⋯</ToolbarButton>
+              <ToolbarButton>⋯</ToolbarButton>
             </div>
             <div className="bg-black/5 gap-4 flex rounded-xl text-black">
               <ToolbarButton>
@@ -154,47 +184,64 @@ export default function NotesWindow() {
         {/* Note content */}
 
         <main className="flex-1 overflow-auto px-6 py-12 text-black/90">
-            {activeItem === "Snelle notities" ? <>
+          {activeItem === "Snelle notities" ? (
+            <>
               <h1 className="mb-6 text-[26px] font-semibold leading-tight">
                 Waar is Lisan gebleven?
               </h1>
 
               <div className="space-y-5 text-[15px] leading-relaxed">
                 <p>
-                  De afgelopen zes maanden heb ik school even ingeruild voor mijn
-                  stage bij <strong>35°</strong>. Het was een tijd vol ups en downs,
-                  spanning, sensatie, koffie en niet te vergeten: code. Ik zal nog
-                  niet alles verklappen, ik schrijf namelijk nog uitgebreid over
-                  alles wat ik heb mogen meemaken.
+                  De afgelopen zes maanden heb ik school even ingeruild voor
+                  mijn stage bij <strong>35°</strong>. Het was een tijd vol ups
+                  en downs, spanning, sensatie, koffie en niet te vergeten:
+                  code. Ik zal nog niet alles verklappen, ik schrijf namelijk
+                  nog uitgebreid over alles wat ik heb mogen meemaken.
                 </p>
                 <p>
-                  Maar, weet dat ik het <span className="italic">helemaal </span>
+                  Maar, weet dat ik het{" "}
+                  <span className="italic">helemaal </span>
                   geweldig vond.
                 </p>
               </div>
-            </> : activeItem === "Recent verwijderd" ? <>
+            </>
+          ) : activeItem === "Recent verwijderd" ? (
+            <>
               <h1 className="mb-6 text-[26px] font-semibold leading-tight">
                 Boodschappen kantoor
               </h1>
 
               <ul className="space-y-5 text-[15px] leading-relaxed">
                 <li className="flex gap-2 items-center">
-                  <ClickableBullet clicked={clickedBullets.has(0)} onClick={() => handleBulletClick(0)} />
+                  <ClickableBullet
+                    clicked={clickedBullets.has(0)}
+                    onClick={() => handleBulletClick(0)}
+                  />
                   lekker brood
                 </li>
                 <li className="flex gap-2 items-center">
-                  <ClickableBullet clicked={clickedBullets.has(1)} onClick={() => handleBulletClick(1)} />
+                  <ClickableBullet
+                    clicked={clickedBullets.has(1)}
+                    onClick={() => handleBulletClick(1)}
+                  />
                   bakjes
                 </li>
                 <li className="flex gap-2 items-center">
-                  <ClickableBullet clicked={clickedBullets.has(2)} onClick={() => handleBulletClick(2)} />
+                  <ClickableBullet
+                    clicked={clickedBullets.has(2)}
+                    onClick={() => handleBulletClick(2)}
+                  />
                   koffiebonen
                 </li>
                 <li className="flex gap-2 items-center">
-                  <ClickableBullet clicked={clickedBullets.has(3)} onClick={() => handleBulletClick(3)} />
+                  <ClickableBullet
+                    clicked={clickedBullets.has(3)}
+                    onClick={() => handleBulletClick(3)}
+                  />
                 </li>
               </ul>
-            </> : null}
+            </>
+          ) : null}
         </main>
       </div>
     </Draggable>
@@ -227,10 +274,27 @@ function SidebarItem({
   );
 }
 
-function TrafficLights() {
+function TrafficLights({
+  closable = false,
+  onClose,
+}: {
+  closable?: boolean;
+  onClose?: () => void;
+}) {
+  const redControl =
+    closable && onClose ? (
+      <button
+        type="button"
+        onClick={onClose}
+        className="h-[12px] w-[12px] rounded-full bg-red-500 shadow-inner transition hover:bg-red-600 focus:outline-none"
+        aria-label="Sluiten"
+      />
+    ) : (
+      <Dot color="bg-red-500" />
+    );
   return (
     <div className="flex gap-2">
-      <Dot color="bg-red-500" />
+      {redControl}
       <Dot color="bg-yellow-400" />
       <Dot color="bg-green-500" />
     </div>
@@ -244,26 +308,45 @@ function Dot({ color }: { color: string }) {
 }
 
 function ToolbarButton({ children }: { children: React.ReactNode }) {
-  return (
-    <button className="px-2 py-1 text-[13px]">
-      {children}
-    </button>
-  );
+  return <button className="px-2 py-1 text-[13px]">{children}</button>;
 }
 
-function ClickableBullet({clicked, onClick}: {clicked: boolean; onClick: () => void}){
+function ClickableBullet({
+  clicked,
+  onClick,
+}: {
+  clicked: boolean;
+  onClick: () => void;
+}) {
   return (
     <button onClick={onClick} className="cursor-pointer">
       {clicked ? (
-                <svg width="18" height="18" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.97656 11.9531C5.15234 11.9531 4.37891 11.7969 3.65625 11.4844C2.93359 11.1758 2.29883 10.748 1.75195 10.2012C1.20508 9.65039 0.775391 9.01562 0.462891 8.29688C0.154297 7.57422 0 6.80078 0 5.97656C0 5.15234 0.154297 4.37891 0.462891 3.65625C0.775391 2.93359 1.20508 2.29883 1.75195 1.75195C2.29883 1.20508 2.93359 0.777344 3.65625 0.46875C4.37891 0.15625 5.15234 0 5.97656 0C6.80078 0 7.57422 0.15625 8.29688 0.46875C9.01953 0.777344 9.6543 1.20508 10.2012 1.75195C10.748 2.29883 11.1758 2.93359 11.4844 3.65625C11.7969 4.37891 11.9531 5.15234 11.9531 5.97656C11.9531 6.80078 11.7969 7.57422 11.4844 8.29688C11.1758 9.01562 10.748 9.65039 10.2012 10.2012C9.6543 10.748 9.01953 11.1758 8.29688 11.4844C7.57422 11.7969 6.80078 11.9531 5.97656 11.9531ZM5.32031 8.83594C5.42188 8.83594 5.51367 8.8125 5.5957 8.76562C5.67773 8.71875 5.75 8.64844 5.8125 8.55469L8.56641 4.21289C8.60156 4.1543 8.63477 4.0918 8.66602 4.02539C8.69727 3.95898 8.71289 3.89258 8.71289 3.82617C8.71289 3.68945 8.66211 3.58203 8.56055 3.50391C8.45898 3.42188 8.3457 3.38086 8.2207 3.38086C8.04883 3.38086 7.9082 3.4707 7.79883 3.65039L5.29688 7.66992L4.10742 6.13477C4.0332 6.03711 3.96094 5.9707 3.89062 5.93555C3.82422 5.90039 3.74805 5.88281 3.66211 5.88281C3.5293 5.88281 3.41797 5.93164 3.32812 6.0293C3.23828 6.12305 3.19336 6.23633 3.19336 6.36914C3.19336 6.43555 3.20508 6.50195 3.22852 6.56836C3.25586 6.63086 3.29102 6.69141 3.33398 6.75L4.80469 8.55469C4.88281 8.65625 4.96289 8.72852 5.04492 8.77148C5.12695 8.81445 5.21875 8.83594 5.32031 8.83594Z" fill="#F9C500"/>
-              </svg>
-      ) : (
-        <svg width="18" height="18" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5.97656 11.9531C5.15234 11.9531 4.37891 11.7969 3.65625 11.4844C2.93359 11.1758 2.29883 10.748 1.75195 10.2012C1.20508 9.6543 0.775391 9.01953 0.462891 8.29688C0.154297 7.57422 0 6.80078 0 5.97656C0 5.15234 0.154297 4.37891 0.462891 3.65625C0.775391 2.93359 1.20508 2.29883 1.75195 1.75195C2.29883 1.20117 2.93359 0.771484 3.65625 0.462891C4.37891 0.154297 5.15234 0 5.97656 0C6.80078 0 7.57422 0.154297 8.29688 0.462891C9.01953 0.771484 9.6543 1.20117 10.2012 1.75195C10.748 2.29883 11.1758 2.93359 11.4844 3.65625C11.7969 4.37891 11.9531 5.15234 11.9531 5.97656C11.9531 6.80078 11.7969 7.57422 11.4844 8.29688C11.1758 9.01953 10.748 9.6543 10.2012 10.2012C9.6543 10.748 9.01953 11.1758 8.29688 11.4844C7.57422 11.7969 6.80078 11.9531 5.97656 11.9531ZM5.97656 10.957C6.66406 10.957 7.30859 10.8281 7.91016 10.5703C8.51172 10.3125 9.04102 9.95508 9.49805 9.49805C9.95508 9.04102 10.3125 8.51172 10.5703 7.91016C10.8281 7.30859 10.957 6.66406 10.957 5.97656C10.957 5.28906 10.8281 4.64453 10.5703 4.04297C10.3125 3.4375 9.95508 2.9082 9.49805 2.45508C9.04102 1.99805 8.51172 1.64062 7.91016 1.38281C7.30859 1.125 6.66406 0.996094 5.97656 0.996094C5.28906 0.996094 4.64453 1.125 4.04297 1.38281C3.44141 1.64062 2.91211 1.99805 2.45508 2.45508C1.99805 2.9082 1.64062 3.4375 1.38281 4.04297C1.125 4.64453 0.996094 5.28906 0.996094 5.97656C0.996094 6.66406 1.125 7.30859 1.38281 7.91016C1.64062 8.51172 1.99805 9.04102 2.45508 9.49805C2.91211 9.95508 3.44141 10.3125 4.04297 10.5703C4.64453 10.8281 5.28906 10.957 5.97656 10.957Z" fill="black"/>
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.97656 11.9531C5.15234 11.9531 4.37891 11.7969 3.65625 11.4844C2.93359 11.1758 2.29883 10.748 1.75195 10.2012C1.20508 9.65039 0.775391 9.01562 0.462891 8.29688C0.154297 7.57422 0 6.80078 0 5.97656C0 5.15234 0.154297 4.37891 0.462891 3.65625C0.775391 2.93359 1.20508 2.29883 1.75195 1.75195C2.29883 1.20508 2.93359 0.777344 3.65625 0.46875C4.37891 0.15625 5.15234 0 5.97656 0C6.80078 0 7.57422 0.15625 8.29688 0.46875C9.01953 0.777344 9.6543 1.20508 10.2012 1.75195C10.748 2.29883 11.1758 2.93359 11.4844 3.65625C11.7969 4.37891 11.9531 5.15234 11.9531 5.97656C11.9531 6.80078 11.7969 7.57422 11.4844 8.29688C11.1758 9.01562 10.748 9.65039 10.2012 10.2012C9.6543 10.748 9.01953 11.1758 8.29688 11.4844C7.57422 11.7969 6.80078 11.9531 5.97656 11.9531ZM5.32031 8.83594C5.42188 8.83594 5.51367 8.8125 5.5957 8.76562C5.67773 8.71875 5.75 8.64844 5.8125 8.55469L8.56641 4.21289C8.60156 4.1543 8.63477 4.0918 8.66602 4.02539C8.69727 3.95898 8.71289 3.89258 8.71289 3.82617C8.71289 3.68945 8.66211 3.58203 8.56055 3.50391C8.45898 3.42188 8.3457 3.38086 8.2207 3.38086C8.04883 3.38086 7.9082 3.4707 7.79883 3.65039L5.29688 7.66992L4.10742 6.13477C4.0332 6.03711 3.96094 5.9707 3.89062 5.93555C3.82422 5.90039 3.74805 5.88281 3.66211 5.88281C3.5293 5.88281 3.41797 5.93164 3.32812 6.0293C3.23828 6.12305 3.19336 6.23633 3.19336 6.36914C3.19336 6.43555 3.20508 6.50195 3.22852 6.56836C3.25586 6.63086 3.29102 6.69141 3.33398 6.75L4.80469 8.55469C4.88281 8.65625 4.96289 8.72852 5.04492 8.77148C5.12695 8.81445 5.21875 8.83594 5.32031 8.83594Z"
+            fill="#F9C500"
+          />
         </svg>
-
+      ) : (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M5.97656 11.9531C5.15234 11.9531 4.37891 11.7969 3.65625 11.4844C2.93359 11.1758 2.29883 10.748 1.75195 10.2012C1.20508 9.6543 0.775391 9.01953 0.462891 8.29688C0.154297 7.57422 0 6.80078 0 5.97656C0 5.15234 0.154297 4.37891 0.462891 3.65625C0.775391 2.93359 1.20508 2.29883 1.75195 1.75195C2.29883 1.20117 2.93359 0.771484 3.65625 0.462891C4.37891 0.154297 5.15234 0 5.97656 0C6.80078 0 7.57422 0.154297 8.29688 0.462891C9.01953 0.771484 9.6543 1.20117 10.2012 1.75195C10.748 2.29883 11.1758 2.93359 11.4844 3.65625C11.7969 4.37891 11.9531 5.15234 11.9531 5.97656C11.9531 6.80078 11.7969 7.57422 11.4844 8.29688C11.1758 9.01953 10.748 9.6543 10.2012 10.2012C9.6543 10.748 9.01953 11.1758 8.29688 11.4844C7.57422 11.7969 6.80078 11.9531 5.97656 11.9531ZM5.97656 10.957C6.66406 10.957 7.30859 10.8281 7.91016 10.5703C8.51172 10.3125 9.04102 9.95508 9.49805 9.49805C9.95508 9.04102 10.3125 8.51172 10.5703 7.91016C10.8281 7.30859 10.957 6.66406 10.957 5.97656C10.957 5.28906 10.8281 4.64453 10.5703 4.04297C10.3125 3.4375 9.95508 2.9082 9.49805 2.45508C9.04102 1.99805 8.51172 1.64062 7.91016 1.38281C7.30859 1.125 6.66406 0.996094 5.97656 0.996094C5.28906 0.996094 4.64453 1.125 4.04297 1.38281C3.44141 1.64062 2.91211 1.99805 2.45508 2.45508C1.99805 2.9082 1.64062 3.4375 1.38281 4.04297C1.125 4.64453 0.996094 5.28906 0.996094 5.97656C0.996094 6.66406 1.125 7.30859 1.38281 7.91016C1.64062 8.51172 1.99805 9.04102 2.45508 9.49805C2.91211 9.95508 3.44141 10.3125 4.04297 10.5703C4.64453 10.8281 5.28906 10.957 5.97656 10.957Z"
+            fill="black"
+          />
+        </svg>
       )}
     </button>
-  )
+  );
 }
