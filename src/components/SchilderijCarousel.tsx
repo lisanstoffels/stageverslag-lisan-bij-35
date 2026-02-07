@@ -190,10 +190,10 @@ export function SchilderijCarousel() {
               aria-label="Sluiten"
             >
               <div
-                className="relative flex max-h-[90vh] max-w-[95vw] flex-row items-center justify-center "
+                className="relative flex max-h-[90vh] w-[95vw] flex-row items-center justify-center"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="relative w-[40vw] h-auto shrink-0">
+                <div className="relative w-[40vw] max-w-[595px] h-auto shrink-0">
                   <Image
                     src={selectedSchilderij.src}
                     alt={selectedSchilderij.alt}
@@ -202,7 +202,7 @@ export function SchilderijCarousel() {
                     className="block h-full w-full object-contain"
                   />
                 </div>
-                <div className="relative h-[84vh] w-[45vw] -ml-8 shrink-0 overflow-hidden">
+                <div className="relative h-[84vh] w-[45vw] max-w-[565px] -ml-8 shrink-0 overflow-hidden">
                   <Image
                     src="/images/paper/papier_met_kant.png"
                     alt=""
@@ -216,7 +216,7 @@ export function SchilderijCarousel() {
                   </div>
                 </div>
 
-                <div className="absolute bottom-15 left-1/4 flex -translate-x-1/2 translate-y-full items-center gap-4">
+                <div className="absolute bottom-15 left-1/2 flex -translate-x-1/2 translate-y-full items-center gap-4">
                   <button
                     type="button"
                     onClick={(e) => {
