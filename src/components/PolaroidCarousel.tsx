@@ -261,10 +261,17 @@ export function PolaroidCarousel() {
           const nextIndex =
             currentIndex >= PEOPLE.length - 1 ? 0 : currentIndex + 1;
           return (
-            <button
-              type="button"
+            <div
+              role="button"
+              tabIndex={0}
               onClick={() => setSelectedPerson(null)}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm focus:outline-none"
+              onKeyDown={(e) => {
+                if (e.key === "Escape" || e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedPerson(null);
+                }
+              }}
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm focus:outline-none cursor-default"
               aria-label="Sluiten"
             >
               <span
@@ -327,14 +334,14 @@ export function PolaroidCarousel() {
                 </div>
 
                 {/* Links/rechts knoppen om van persoon te wisselen */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full flex items-center gap-4 mt-3">
+                <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 translate-y-full flex items-center gap-4">
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       setSelectedPerson(PEOPLE[prevIndex]);
                     }}
-                    className="rounded-full bg-white/90 p-2 shadow-md hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+                    className="rounded-full bg-white/70 p-2 shadow-md hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
                     aria-label="Vorige persoon"
                   >
                     <svg
@@ -357,7 +364,7 @@ export function PolaroidCarousel() {
                       e.stopPropagation();
                       setSelectedPerson(PEOPLE[nextIndex]);
                     }}
-                    className="rounded-full bg-white/90 p-2 shadow-md hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+                    className="rounded-full bg-white/70 p-2 shadow-md hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
                     aria-label="Volgende persoon"
                   >
                     <svg
@@ -376,7 +383,7 @@ export function PolaroidCarousel() {
                   </button>
                 </div>
               </span>
-            </button>
+            </div>
           );
         })()}
     </>

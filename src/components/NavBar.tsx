@@ -15,7 +15,7 @@ export function NavBar() {
 
   return (
     <div className="sticky top-0 z-50 ">
-      <div className="w-full h-3 bg-[#f1f1ec]"></div>
+      <div className="w-full h-3 bg-[#f1f1ec] dark:bg-[#1f1d1b]" />
       <div className=" mx-auto w-4/5">
         <nav className="navbar-notch">
           <ul className="flex justify-between px-25 py-5 text-gray-800 *:hover:tracking-widest *:hover:font-bold *:duration-100 origin-center">

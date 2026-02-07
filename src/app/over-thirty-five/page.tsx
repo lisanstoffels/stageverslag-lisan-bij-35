@@ -39,7 +39,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   De CMD stagemarkt was erg fijn, omdat er allemaal bedrijven
-                  uit de regio aanwezig waren, die ook nog een bekend waren met
+                  uit de regio aanwezig waren, die ook nog eens bekend waren met
                   de opleiding die ik nu doe. Mijn portfolio website maakte
                   indruk (gelukkig maar, ik had er ook veel werk in gestoken!),
                   en een week later had ik al een gesprek bij 35.
