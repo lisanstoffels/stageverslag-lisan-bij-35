@@ -55,7 +55,7 @@ export default function AboutPage() {
           </div>
           <div className="absolute left-0 top-1/2 w-[290px] -translate-y-1/2 -translate-x-[55%]">
             <Image
-              src="/images/rommel/polaroid_lisan.png"
+              src="/images/polaroids/polaroid_lisan.png"
               alt="Ik"
               width={290}
               height={330}

@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function HomePage() {
   return (
     <>
-      <div className="m-5 relative overflow-hidden rounded-2xl h-[600px] bg-light-blue">
+      <div className="m-5 relative overflow-hidden rounded-2xl h-[650px] bg-light-blue">
         <Image
           src="/images/bg-images/goldenway_mat.png"
           width={1000}

@@ -14,7 +14,7 @@ export type Person = {
 const PEOPLE: Person[] = [
   {
     polaroid: {
-      src: "/images/rommel/polaroid_pascal.png",
+      src: "/images/polaroids/polaroid_pascal.png",
       alt: "Polaroid Pascal",
     },
     beschrijving: (
@@ -37,10 +37,10 @@ const PEOPLE: Person[] = [
       </>
     ),
     bullets: ["founder", "longboard pro", "hoofd feestcommissie"],
-    dog: { src: "/images/rommel/polaroid_niels.png", alt: "Hond van Pascal" },
+    dog: { src: "/images/polaroids/polaroid_niels.png", alt: "Hond van Pascal" },
   },
   {
-    polaroid: { src: "/images/rommel/polaroid_juul.png", alt: "Polaroid Juul" },
+    polaroid: { src: "/images/polaroids/polaroid_juul.png", alt: "Polaroid Juul" },
     beschrijving: (
       <>
         <p className="pb-4">
@@ -64,7 +64,7 @@ const PEOPLE: Person[] = [
     bullets: ["founder", "piano maestro", "stroopsupplier"],
   },
   {
-    polaroid: { src: "/images/rommel/polaroid_bob.png", alt: "Polaroid Bob" },
+    polaroid: { src: "/images/polaroids/polaroid_bob.png", alt: "Polaroid Bob" },
     beschrijving: (
       <>
         <p className="pb-4">
@@ -85,11 +85,11 @@ const PEOPLE: Person[] = [
       </>
     ),
     bullets: ["founder", "heeft gekke streamer setup", "buurman is pastior"],
-    dog: { src: "/images/rommel/polaroid_cheddar.png", alt: "Hond van Bob" },
+    dog: { src: "/images/polaroids/polaroid_cheddar.png", alt: "Hond van Bob" },
   },
   {
     polaroid: {
-      src: "/images/rommel/polaroid_frank.png",
+      src: "/images/polaroids/polaroid_frank.png",
       alt: "Polaroid Frank",
     },
     beschrijving: (
@@ -119,7 +119,7 @@ const PEOPLE: Person[] = [
   },
   {
     polaroid: {
-      src: "/images/rommel/polaroid_tristan.png",
+      src: "/images/polaroids/polaroid_tristan.png",
       alt: "Polaroid Tristan",
     },
     beschrijving: (
@@ -142,7 +142,7 @@ const PEOPLE: Person[] = [
     bullets: ["founder", "style icon"],
   },
   {
-    polaroid: { src: "/images/rommel/polaroid_sem.png", alt: "Polaroid Sem" },
+    polaroid: { src: "/images/polaroids/polaroid_sem.png", alt: "Polaroid Sem" },
     beschrijving: (
       <>
         <p className="pb-4">
@@ -163,7 +163,7 @@ const PEOPLE: Person[] = [
     bullets: ["geweldige collectie 2e hands truien", "nep-vegetariër"],
   },
   {
-    polaroid: { src: "/images/rommel/polaroid_mats.png", alt: "Polaroid Mats" },
+    polaroid: { src: "/images/polaroids/polaroid_mats.png", alt: "Polaroid Mats" },
     beschrijving: (
       <>
         <p className="pb-4">
@@ -187,7 +187,7 @@ const PEOPLE: Person[] = [
   },
   {
     polaroid: {
-      src: "/images/rommel/polaroid_driek.png",
+      src: "/images/polaroids/polaroid_driek.png",
       alt: "Polaroid Driek",
     },
     beschrijving: (

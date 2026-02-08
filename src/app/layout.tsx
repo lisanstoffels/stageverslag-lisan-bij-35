@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.className} antialiased relative`}>
+      <body
+        className={`${dmSans.className} antialiased relative flex h-screen flex-col`}
+      >
         {/* Blokkeer de site op schermen smaller dan 1056px */}
         <div
           className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-[#f5f5f7] p-6 min-[1056px]:hidden"
@@ -34,7 +36,7 @@ export default function RootLayout({
           </p>
         </div>
         <NavBar />
-        {children}
+        <main className="min-h-0 flex-1">{children}</main>
       </body>
     </html>
   );
