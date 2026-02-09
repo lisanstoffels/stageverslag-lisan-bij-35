@@ -35,7 +35,7 @@ export const PROJECTS: {
             <p>
               Ik ben inmiddels al de 3e stagiaire hier bij 35, en dit zal dus
               geen verrassing zijn: ik heb net als de vorige twee stagiaires,
-              Driek en Sem, een twitter clone mogen nabouwen. Hier heb ik de
+              Driek en Sem, de twitterapplicatie mogen nabouwen. Hier heb ik de
               eerste twee weken van mijn stagetijd de ruimte voor gekregen. Het
               doel was kennismaking met de workflow van de devs en de frameworks
               die ze hier gebruiken.
