@@ -154,7 +154,7 @@ export default function LeerdoelenPage() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+    <div className="flex min-h-screen flex-col overflow-hidden">
       <div className="min-h-0 flex-1" />
 
       <div className="relative h-[225px] w-[1512px] mx-auto">
